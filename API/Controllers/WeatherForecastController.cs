@@ -41,7 +41,6 @@ public class WeatherForecastController : ControllerBase
 
     public ActionResult<WeatherForecast> Create()
     {
-        Console.WriteLine($"Database path: {_context.DbPath}");
         Console.WriteLine("Insert a new WeatherForecast");
 
         var forecast = new WeatherForecast()
