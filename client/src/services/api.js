@@ -48,3 +48,47 @@ export const searchProducts = async (searchTerm) => {
     throw error;
   }
 };
+
+export const createOrder = async (customerEmail, cartItems) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        customerEmail,
+        items: cartItems.map((item) => ({
+          productId: item.product.id,
+          quantity: item.quantity,
+        })),
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error || "Failed to create order");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error creating order:", error);
+    throw error;
+  }
+};
+
+// Get order by ID
+export const getOrderById = async (orderId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}`);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch order");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching order:", error);
+    throw error;
+  }
+};
