@@ -1,3 +1,5 @@
+import Checkout from "./components/Checkout/Checkout";
+import OrderSuccess from "./components/Checkout/OrderSuccess";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ProductList from "./components/ProductList";
@@ -5,7 +7,6 @@ import ProductDetail from "./components/ProductDetail";
 import "./App.css";
 import CartButton from "./components/Cart/CartButton";
 import Cart from "./components/Cart/Cart";
-
 
 function App() {
   // Cart state
@@ -93,51 +94,62 @@ function App() {
   const getCartItemCount = () => {
     return cartItems.reduce((count, item) => count + item.quantity, 0);
   };
-  
+
   return (
-  <Router>
-    <div className="app">
-      <header className="app-header">
-        <div className="header-content">
-          <div>
-            <h1>Blogbox Store</h1>
-            <p>Your E-Commerce Solution</p>
+    <Router>
+      <div className="app">
+        <header className="app-header">
+          <div className="header-content">
+            <div>
+              <h1>Blogbox Store</h1>
+              <p>Your E-Commerce Solution</p>
+            </div>
+            <CartButton
+              itemCount={getCartItemCount()}
+              total={getCartTotal()}
+              onClick={() => setShowCart(true)}
+            />
           </div>
-          <CartButton
-            itemCount={getCartItemCount()}
+        </header>
+
+        <main className="app-main">
+          <Routes>
+            <Route path="/" element={<ProductList />} />
+            <Route
+              path="/products/:id"
+              element={<ProductDetail addToCart={addToCart} />}
+            />
+            <Route
+              path="/checkout"
+              element={
+                <Checkout
+                  cartItems={cartItems}
+                  cartTotal={getCartTotal()}
+                  clearCart={clearCart}
+                />
+              }
+            />
+            <Route path="/order/success" element={<OrderSuccess />} />
+          </Routes>
+        </main>
+
+        <footer className="app-footer">
+          <p>&copy; 2024 Blogbox Store. Built with React & ASP.NET Core</p>
+        </footer>
+
+        {showCart && (
+          <Cart
+            items={cartItems}
             total={getCartTotal()}
-            onClick={() => setShowCart(true)}
+            onUpdateQuantity={updateQuantity}
+            onRemove={removeFromCart}
+            onClear={clearCart}
+            onClose={() => setShowCart(false)}
           />
-        </div>
-      </header>
-
-      <main className="app-main">
-        <Routes>
-          <Route path="/" element={<ProductList />} />
-          <Route
-            path="/products/:id"
-            element={<ProductDetail addToCart={addToCart} />}
-          />
-        </Routes>
-      </main>
-
-      <footer className="app-footer">
-        <p>&copy; 2024 Blogbox Store. Built with React & ASP.NET Core</p>
-      </footer>
-
-      {showCart && (
-        <Cart
-          items={cartItems}
-          total={getCartTotal()}
-          onUpdateQuantity={updateQuantity}
-          onRemove={removeFromCart}
-          onClear={clearCart}
-          onClose={() => setShowCart(false)}
-        />
-      )}
-    </div>
-  </Router>
-);
+        )}
+      </div>
+    </Router>
+  );
 }
 
 export default App;
