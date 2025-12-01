@@ -26,6 +26,10 @@ public class Order
 
     public DateTime? CompletedDate { get; set; }
 
+    // Stripe payment fields
+    public string? StripeSessionId { get; set; }
+    public string? StripePaymentIntentId { get; set; }
+
     // Navigation property - one order has many order items
     public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }
