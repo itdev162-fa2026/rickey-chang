@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { getOrderById } from "../../services/api";
+import { getOrderBySessionId } from "../../services/api";
 import "./OrderSuccess.css";
 
 function OrderSuccess() {
@@ -11,10 +11,10 @@ function OrderSuccess() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const orderId = searchParams.get("orderId");
+    const sessionId = searchParams.get("session_id");
 
-    if (!orderId) {
-      setError("No order ID found");
+    if (!sessionId) {
+      setError("No session ID found");
       setLoading(false);
       return;
     }
@@ -22,8 +22,12 @@ function OrderSuccess() {
     const fetchOrder = async () => {
       try {
         setLoading(true);
-        const orderData = await getOrderById(orderId);
+        const orderData = await getOrderBySessionId(sessionId);
         setOrder(orderData);
+
+        // Clear cart from localStorage on successful payment
+        localStorage.removeItem("cart");
+
         setError(null);
       } catch (err) {
         setError("Failed to load order details. Please contact support.");
@@ -76,7 +80,7 @@ function OrderSuccess() {
       <div className="success-content">
         <div className="success-header">
           <div className="success-icon">✓</div>
-          <h1>Order Placed Successfully!</h1>
+          <h1>Payment Successful!</h1>
           <p className="success-message">
             Thank you for your order. A confirmation email has been sent to{" "}
             <strong>{order.customerEmail}</strong>
@@ -131,11 +135,15 @@ function OrderSuccess() {
           </div>
         </div>
 
-        <div className="next-steps">
-          <p className="next-activity-note">
-            💡 Note: In Activities 11-12, we'll add Stripe payment processing so
-            orders require actual payment before completion.
+        <div className="payment-info">
+          <p className="stripe-notice">
+            🔒 Payment securely processed by Stripe
           </p>
+          {order.stripePaymentIntentId && (
+            <p className="payment-id">
+              Payment ID: {order.stripePaymentIntentId}
+            </p>
+          )}
         </div>
 
         <button

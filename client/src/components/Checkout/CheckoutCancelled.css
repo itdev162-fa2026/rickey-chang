@@ -1,0 +1,88 @@
+.cancelled-container {
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 20px;
+}
+
+.cancelled-content {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 60px 40px;
+  text-align: center;
+}
+
+.cancelled-icon {
+  width: 80px;
+  height: 80px;
+  background: #fadbd8;
+  color: #e74c3c;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: bold;
+  margin: 0 auto 30px;
+}
+
+.cancelled-content h1 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+  font-size: 28px;
+}
+
+.cancelled-content p {
+  margin: 0 0 30px 0;
+  color: #666;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.cancelled-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.retry-button,
+.home-button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.retry-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.retry-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.home-button {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.home-button:hover {
+  background: #d0d0d0;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .cancelled-actions {
+    flex-direction: column;
+  }
+
+  .retry-button,
+  .home-button {
+    width: 100%;
+  }
+}

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import "./Cart.css";
 
@@ -49,17 +48,16 @@ function Cart({ items, total, onUpdateQuantity, onRemove, onClear, onClose }) {
                       ${total.toFixed(2)}
                     </span>
                   </div>
-
                   <button className="clear-cart-button" onClick={onClear}>
                     Clear Cart
                   </button>
-
                   <Link to="/checkout" className="checkout-button-link">
                     <button className="checkout-button">
                       Proceed to Checkout
                     </button>
-                  </Link>
-                </div>;
+                  </Link>;
+                </div>
+                ;
               </div>
             </>
           )}

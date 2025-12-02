@@ -1,5 +1,6 @@
 import Checkout from "./components/Checkout/Checkout";
 import OrderSuccess from "./components/Checkout/OrderSuccess";
+import CheckoutCancelled from "./components/Checkout/CheckoutCancelled";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ProductList from "./components/ProductList";
@@ -130,6 +131,7 @@ function App() {
               }
             />
             <Route path="/order/success" element={<OrderSuccess />} />
+            <Route path="/checkout/cancelled" element={<CheckoutCancelled />} />
           </Routes>
         </main>
 
